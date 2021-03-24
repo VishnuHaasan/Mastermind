@@ -8,7 +8,6 @@ class Game
     @coder.getCode
     while !isGameOver(@coder.code,@guesser.code) do
       @guesser.getGuess
-      puts @guesser.code
       startGuess(@coder.code,@guesser.code)
     end
     @guesser.winMessage
@@ -47,17 +46,21 @@ class Game
   end
 end
 
-
-class Human
-  attr_reader :code,:name
+class Player
   def initialize(name)
     @name = name
     @code = Array.new
   end
-
+  
   def uniq?(a)
     return true if a == a.uniq
     return false
+  end
+end
+class Human < Player
+  attr_reader :code,:name
+  def initialize(name)
+    super(name)
   end
 
   def getGuess
@@ -98,17 +101,11 @@ class Human
 end
 
 
-class Computer
+class Computer < Player
   attr_reader :code,:name
   def initialize(name)
-    @name = name
-    @code = Array.new
+    super(name)
     @guess_history = Array.new
-  end
-
-  def uniq?(a)
-    return true if a == a.uniq
-    return false
   end
 
   def getCode
